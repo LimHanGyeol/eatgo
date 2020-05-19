@@ -1,5 +1,6 @@
 package me.hangyeol.eatgo.interfaces;
 
+import me.hangyeol.eatgo.application.RestaurantService;
 import me.hangyeol.eatgo.domain.MenuItemRepository;
 import me.hangyeol.eatgo.domain.MenuItemRepositoryImpl;
 import me.hangyeol.eatgo.domain.RestaurantRepository;
@@ -20,6 +21,9 @@ class RestaurantControllerTests {
 
     @Autowired
     private MockMvc mvc;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;

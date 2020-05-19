@@ -1,5 +1,6 @@
 package me.hangyeol.eatgo.interfaces;
 
+import me.hangyeol.eatgo.application.RestaurantService;
 import me.hangyeol.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,24 +13,18 @@ import java.util.List;
 public class RestaurantController {
 
     @Autowired
-    private RestaurantRepository restaurantRepository;
-    @Autowired
-    private MenuItemRepository menuItemRepository;
+    private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
-        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        List<Restaurant> restaurantList = restaurantService.getRestaurants();
 
         return restaurantList;
     }
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id);
-
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-        restaurant.setMenuItems(menuItems);
-
+        Restaurant restaurant = restaurantService.getRestaurant(id);
 
         return restaurant;
     }
