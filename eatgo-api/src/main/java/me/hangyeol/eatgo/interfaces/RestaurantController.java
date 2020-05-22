@@ -1,9 +1,8 @@
 package me.hangyeol.eatgo.interfaces;
 
 import me.hangyeol.eatgo.application.RestaurantService;
-import me.hangyeol.eatgo.domain.*;
+import me.hangyeol.eatgo.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +18,8 @@ public class RestaurantController {
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
-        List<Restaurant> restaurantList = restaurantService.getRestaurants();
-
-        return restaurantList;
+        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        return restaurants;
     }
 
     @GetMapping("/restaurants/{id}")
@@ -37,7 +35,7 @@ public class RestaurantController {
         String name = resource.getName();
         String address = resource.getAddress();
 
-        Restaurant restaurant = new Restaurant(1234L, name, address);
+        Restaurant restaurant = new Restaurant(name, address);
         restaurantService.addRestaurant(restaurant);
 
         URI location = new URI("/restaurants/" + restaurant.getId());

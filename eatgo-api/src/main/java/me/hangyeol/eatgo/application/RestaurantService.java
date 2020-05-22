@@ -21,13 +21,13 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        List<Restaurant> restaurants = restaurantRepository.findAll();
 
-        return restaurantList;
+        return restaurants;
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id);
+        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
 
         List<MenuItem> menuItemList = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItemList);
