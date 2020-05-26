@@ -1,5 +1,10 @@
 package me.hangyeol.eatgo.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Restaurant {
 
     @Id
@@ -18,9 +27,6 @@ public class Restaurant {
 
     @Transient
     private List<MenuItem> menuItems = new ArrayList<>();
-
-    public Restaurant() {
-    }
 
     public Restaurant(String name, String address) {
         this.name = name;
@@ -33,26 +39,9 @@ public class Restaurant {
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) { this.id = id; }
-
-    public String getName() {
-        return name;
-    }
 
     public String getInformation() {
         return name + " in " + address;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
     }
 
     public void addMenuItem(MenuItem menuItem) {
