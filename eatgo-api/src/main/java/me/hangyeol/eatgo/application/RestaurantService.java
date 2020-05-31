@@ -1,9 +1,6 @@
 package me.hangyeol.eatgo.application;
 
-import me.hangyeol.eatgo.domain.MenuItem;
-import me.hangyeol.eatgo.domain.MenuItemRepository;
-import me.hangyeol.eatgo.domain.Restaurant;
-import me.hangyeol.eatgo.domain.RestaurantRepository;
+import me.hangyeol.eatgo.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,7 +25,8 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItemList = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItemList);

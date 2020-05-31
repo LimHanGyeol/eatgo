@@ -1,9 +1,6 @@
 package me.hangyeol.eatgo.application;
 
-import me.hangyeol.eatgo.domain.MenuItem;
-import me.hangyeol.eatgo.domain.MenuItemRepository;
-import me.hangyeol.eatgo.domain.Restaurant;
-import me.hangyeol.eatgo.domain.RestaurantRepository;
+import me.hangyeol.eatgo.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,11 +12,12 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 class RestaurantServiceTests {
-
 
     private RestaurantService restaurantService;
 
@@ -72,12 +70,22 @@ class RestaurantServiceTests {
     }
 
     @Test
-    public void getRestaurant() {
+    public void getRestaurantWithExisted() {
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
+
+        assertThat(restaurant.getId(), is(1004L));
 
         MenuItem menuItem = restaurant.getMenuItems().get(0);
 
         assertThat(menuItem.getName(), is("Kimchi"));
+    }
+
+    @Test
+    public void getRestaurantWithNotExisted() {
+        Throwable throwable = assertThrows(RestaurantNotFoundException.class, () -> {
+            restaurantService.getRestaurant(404L);
+        });
+        assertEquals("Could not find restaurant 404", throwable.getMessage());
     }
 
     @Test

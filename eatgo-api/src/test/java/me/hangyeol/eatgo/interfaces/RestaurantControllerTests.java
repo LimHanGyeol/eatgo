@@ -1,14 +1,13 @@
 package me.hangyeol.eatgo.interfaces;
 
 import me.hangyeol.eatgo.application.RestaurantService;
-import me.hangyeol.eatgo.domain.*;
-import org.junit.jupiter.api.BeforeEach;
+import me.hangyeol.eatgo.domain.MenuItem;
+import me.hangyeol.eatgo.domain.Restaurant;
+import me.hangyeol.eatgo.domain.RestaurantNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -54,7 +53,7 @@ class RestaurantControllerTests {
     }
 
     @Test
-    public void detail() throws Exception {
+    public void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("JOKER House")
@@ -96,6 +95,16 @@ class RestaurantControllerTests {
                 .andExpect(content().string(
                         containsString("\"name\":\"Cyber Food\"")
                 ));
+    }
+
+    @Test
+    public void detailWithNotExisted() throws Exception {
+        given(restaurantService.getRestaurant(404L))
+                .willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restaurants/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
     }
 
     @Test
