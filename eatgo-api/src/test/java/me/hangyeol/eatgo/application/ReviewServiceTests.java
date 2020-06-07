@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 class ReviewServiceTests {
@@ -33,7 +31,7 @@ class ReviewServiceTests {
                 .description("Mat-it-da")
                 .build();
 
-        reviewService.addReview(review);
+        reviewService.addReview(1004L, review);
 
         verify(reviewRepository).save(any());
     }

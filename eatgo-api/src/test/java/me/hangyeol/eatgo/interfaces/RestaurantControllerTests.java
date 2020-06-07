@@ -4,6 +4,7 @@ import me.hangyeol.eatgo.application.RestaurantService;
 import me.hangyeol.eatgo.domain.MenuItem;
 import me.hangyeol.eatgo.domain.Restaurant;
 import me.hangyeol.eatgo.domain.RestaurantNotFoundException;
+import me.hangyeol.eatgo.domain.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -54,7 +55,7 @@ class RestaurantControllerTests {
 
     @Test
     public void detailWithExisted() throws Exception {
-        Restaurant restaurant1 = Restaurant.builder()
+        Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
                 .name("JOKER House")
                 .address("Seoul")
@@ -64,17 +65,16 @@ class RestaurantControllerTests {
                 .name("Kimchi")
                 .build();
 
-        restaurant1.setMenuItems(Arrays.asList(menuItem));
+        restaurant.setMenuItems(Arrays.asList(menuItem));
 
-        Restaurant restaurant2 = Restaurant.builder()
-                .id(2020L)
-                .name("Cyber Food")
-                .address("Seoul")
+        Review review = Review.builder()
+                .name("JOKER")
+                .score(5)
+                .description("Greate!")
                 .build();
+        restaurant.setReviews(Arrays.asList(review));
 
-        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
-        given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
-
+        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
@@ -85,16 +85,9 @@ class RestaurantControllerTests {
                         containsString("\"name\":\"JOKER House\"")
                 ))
                 .andExpect(content().string(
-                        containsString("Kimchi")));
-
-        mvc.perform(get("/restaurants/2020"))
-                .andExpect(status().isOk())
+                        containsString("Kimchi")))
                 .andExpect(content().string(
-                        containsString("\"id\":2020")
-                ))
-                .andExpect(content().string(
-                        containsString("\"name\":\"Cyber Food\"")
-                ));
+                        containsString("Greate!")));
     }
 
     @Test

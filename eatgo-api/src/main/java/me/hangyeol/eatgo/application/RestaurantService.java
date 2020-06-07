@@ -9,13 +9,16 @@ import java.util.List;
 @Service
 public class RestaurantService {
 
-    RestaurantRepository restaurantRepository;
-    MenuItemRepository menuItemRepository;
+    private RestaurantRepository restaurantRepository;
+    private MenuItemRepository menuItemRepository;
+    private ReviewRepository reviewRepository;
 
     public RestaurantService(RestaurantRepository restaurantRepository,
-                             MenuItemRepository menuItemRepository) {
+                             MenuItemRepository menuItemRepository,
+                             ReviewRepository reviewRepository) {
         this.restaurantRepository = restaurantRepository;
         this.menuItemRepository = menuItemRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public List<Restaurant> getRestaurants() {
@@ -30,6 +33,9 @@ public class RestaurantService {
 
         List<MenuItem> menuItemList = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItemList);
+
+        List<Review> reviews = reviewRepository.findAllByRestaurantId(id);
+        restaurant.setReviews(reviews);
 
         return restaurant;
     }

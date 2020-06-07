@@ -27,9 +27,10 @@ public class ReviewController {
             @RequestBody @Valid Review resource)
         throws URISyntaxException {
 
-        Review review = reviewService.addReview(resource);
+        Review review = reviewService.addReview(restaurantId, resource);
         URI url = new URI("/restaurants/" + restaurantId + "/reviews/" + review.getId());
         return ResponseEntity.created(url)
                 .body("{}");
     }
+    // TODO : review Get, Update, Delete 미구현
 }
