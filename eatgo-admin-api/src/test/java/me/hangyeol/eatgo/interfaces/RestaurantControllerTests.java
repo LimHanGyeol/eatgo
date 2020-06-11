@@ -1,10 +1,8 @@
 package me.hangyeol.eatgo.interfaces;
 
 import me.hangyeol.eatgo.application.RestaurantService;
-import me.hangyeol.eatgo.domain.MenuItem;
 import me.hangyeol.eatgo.domain.Restaurant;
 import me.hangyeol.eatgo.domain.RestaurantNotFoundException;
-import me.hangyeol.eatgo.domain.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -61,19 +58,6 @@ class RestaurantControllerTests {
                 .address("Seoul")
                 .build();
 
-        MenuItem menuItem = MenuItem.builder()
-                .name("Kimchi")
-                .build();
-
-        restaurant.setMenuItems(Arrays.asList(menuItem));
-
-        Review review = Review.builder()
-                .name("JOKER")
-                .score(5)
-                .description("Greate!")
-                .build();
-        restaurant.setReviews(Arrays.asList(review));
-
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
@@ -83,11 +67,7 @@ class RestaurantControllerTests {
                 ))
                 .andExpect(content().string(
                         containsString("\"name\":\"JOKER House\"")
-                ))
-                .andExpect(content().string(
-                        containsString("Kimchi")))
-                .andExpect(content().string(
-                        containsString("Greate!")));
+                ));
     }
 
     @Test
