@@ -31,18 +31,18 @@ class ReviewControllerTests {
 
     @Test
     public void createWithValidAttributes() throws Exception {
-        given(reviewService.addReview(eq(1004L), any())).willReturn(
+        given(reviewService.addReview(eq(1L), any())).willReturn(
                 Review.builder()
-                        .id(1L)
+                        .id(1004L)
                         .build());
 
-        mvc.perform(post("/restaurants/1004/reviews")
+        mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"JOKER\",\"score\":3,\"description\":\"Mat-it-da\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurants/1004/reviews/1"));
+                .andExpect(header().string("location", "/restaurants/1/reviews/1004"));
 
-        verify(reviewService).addReview(eq(1004L),any());
+        verify(reviewService).addReview(eq(1L),any());
     }
 
     @Test

@@ -2,11 +2,13 @@ package me.hangyeol.eatgo.interfaces;
 
 import me.hangyeol.eatgo.application.ReviewService;
 import me.hangyeol.eatgo.domain.Review;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class ReviewController {
 

@@ -3,7 +3,6 @@ package me.hangyeol.eatgo.application;
 import me.hangyeol.eatgo.domain.*;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -40,14 +39,4 @@ public class RestaurantService {
         return restaurant;
     }
 
-    public Restaurant addRestaurant(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
-
-    @Transactional
-    public Restaurant updateRestaurant(Long id, String name, String address) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
-        restaurant.updateInformation(name, address);
-        return restaurant;
-    }
 }
