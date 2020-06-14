@@ -3,10 +3,7 @@ package me.hangyeol.eatgo.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.List;
 public class Restaurant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter
     private Long id;
 
