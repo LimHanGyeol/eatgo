@@ -1,8 +1,10 @@
-package me.hangyeol.eatgo.application;
+package me.hangyeol.eatgo.region.service;
 
-import me.hangyeol.eatgo.domain.Region;
-import me.hangyeol.eatgo.domain.RegionRepository;
+import me.hangyeol.eatgo.region.Region;
+import me.hangyeol.eatgo.region.RegionRepository;
+import me.hangyeol.eatgo.region.service.RegionService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,12 +31,21 @@ class RegionServiceTests {
         regionService = new RegionService(regionRepository);
     }
 
-    @Test
-    public void getRegions() {
+    private List<Region> initMockRegions() {
         List<Region> mockRegions = new ArrayList<>();
-        mockRegions.add(Region.builder().name("Seoul").build());
+        mockRegions.add(Region.builder()
+                .name("Seoul")
+                .build());
+        return mockRegions;
+    }
 
-        given(regionRepository.findAll()).willReturn(mockRegions);
+    @Test
+    @DisplayName("전체 지역 정보 가져오기")
+    public void getRegions() {
+        List<Region> mockRegions = initMockRegions();
+
+        given(regionRepository.findAll())
+                .willReturn(mockRegions);
 
         List<Region> regions = regionService.getRegions();
 

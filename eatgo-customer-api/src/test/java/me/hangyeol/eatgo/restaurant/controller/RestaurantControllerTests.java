@@ -1,16 +1,15 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.restaurant.controller;
 
-import me.hangyeol.eatgo.application.RestaurantService;
-import me.hangyeol.eatgo.domain.MenuItem;
-import me.hangyeol.eatgo.domain.Restaurant;
-import me.hangyeol.eatgo.domain.RestaurantNotFoundException;
-import me.hangyeol.eatgo.domain.Review;
-import me.hangyeol.eatgo.interfaces.RestaurantController;
+import me.hangyeol.eatgo.global.exception.RestaurantNotFoundException;
+import me.hangyeol.eatgo.menu.MenuItem;
+import me.hangyeol.eatgo.restaurant.Restaurant;
+import me.hangyeol.eatgo.restaurant.service.RestaurantService;
+import me.hangyeol.eatgo.review.Review;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -18,11 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RestaurantController.class)
 class RestaurantControllerTests {
@@ -33,14 +31,19 @@ class RestaurantControllerTests {
     @MockBean
     private RestaurantService restaurantService;
 
-    @Test
-    public void list() throws Exception {
-        List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder()
+    private Restaurant newInstanceOfRestaurant() {
+        return Restaurant.builder()
                 .id(1004L)
                 .name("JOKER House")
                 .address("Seoul")
-                .build());
+                .build();
+    }
+
+    @Test
+    @DisplayName("/restaurants api 호출로 전체 ")
+    public void list() throws Exception {
+        List<Restaurant> restaurants = new ArrayList<>();
+        restaurants.add(newInstanceOfRestaurant());
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -55,25 +58,19 @@ class RestaurantControllerTests {
     }
 
     @Test
+    @DisplayName("/restaurants/{id} api 호출로 가게 전체 정보 가져오기")
     public void detailWithExisted() throws Exception {
-        Restaurant restaurant = Restaurant.builder()
-                .id(1004L)
-                .name("JOKER House")
-                .address("Seoul")
-                .build();
+        Restaurant restaurant = newInstanceOfRestaurant();
 
-        MenuItem menuItem = MenuItem.builder()
+        restaurant.setMenuItems(Arrays.asList(MenuItem.builder()
                 .name("Kimchi")
-                .build();
+                .build()));
 
-        restaurant.setMenuItems(Arrays.asList(menuItem));
-
-        Review review = Review.builder()
+        restaurant.setReviews(Arrays.asList(Review.builder()
                 .name("JOKER")
                 .score(5)
                 .description("Greate!")
-                .build();
-        restaurant.setReviews(Arrays.asList(review));
+                .build()));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
@@ -92,6 +89,7 @@ class RestaurantControllerTests {
     }
 
     @Test
+    @DisplayName("/restaurants/{id} api 잘못된 input 으로 호출 시 NotFountException 호출")
     public void detailWithNotExisted() throws Exception {
         given(restaurantService.getRestaurant(404L))
                 .willThrow(new RestaurantNotFoundException(404L));

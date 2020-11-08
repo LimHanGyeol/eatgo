@@ -1,7 +1,7 @@
-package me.hangyeol.eatgo.application;
+package me.hangyeol.eatgo.review.service;
 
-import me.hangyeol.eatgo.domain.Review;
-import me.hangyeol.eatgo.domain.ReviewRepository;
+import me.hangyeol.eatgo.review.Review;
+import me.hangyeol.eatgo.review.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 @Service

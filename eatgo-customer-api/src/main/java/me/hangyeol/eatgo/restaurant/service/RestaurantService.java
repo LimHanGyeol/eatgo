@@ -1,8 +1,15 @@
-package me.hangyeol.eatgo.application;
+package me.hangyeol.eatgo.restaurant.service;
 
-import me.hangyeol.eatgo.domain.*;
+import me.hangyeol.eatgo.global.exception.RestaurantNotFoundException;
+import me.hangyeol.eatgo.menu.MenuItem;
+import me.hangyeol.eatgo.menu.MenuItemRepository;
+import me.hangyeol.eatgo.restaurant.Restaurant;
+import me.hangyeol.eatgo.restaurant.RestaurantRepository;
+import me.hangyeol.eatgo.review.Review;
+import me.hangyeol.eatgo.review.ReviewRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -21,11 +28,10 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-
-        return restaurants;
+        return restaurantRepository.findAll();
     }
 
+    @Transactional
     public Restaurant getRestaurant(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new RestaurantNotFoundException(id));

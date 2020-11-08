@@ -1,8 +1,10 @@
-package me.hangyeol.eatgo.application;
+package me.hangyeol.eatgo.category.service;
 
-import me.hangyeol.eatgo.domain.Category;
-import me.hangyeol.eatgo.domain.CategoryRepository;
+import me.hangyeol.eatgo.category.Category;
+import me.hangyeol.eatgo.category.CategoryRepository;
+import me.hangyeol.eatgo.category.service.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -18,7 +20,6 @@ import static org.mockito.Mockito.verify;
 
 class CategoryServiceTests {
 
-
     private CategoryService categoryService;
 
     @Mock
@@ -30,10 +31,16 @@ class CategoryServiceTests {
         categoryService = new CategoryService(categoryRepository);
     }
 
-    @Test
-    public void getCategories() {
+    private List<Category> initMockCategories() {
         List<Category> mockCategories = new ArrayList<>();
         mockCategories.add(Category.builder().name("Korean Food").build());
+        return mockCategories;
+    }
+
+    @Test
+    @DisplayName("전체 음식 분야 카테고리 가져오기")
+    public void getCategories() {
+        List<Category> mockCategories = initMockCategories();
 
         given(categoryRepository.findAll()).willReturn(mockCategories);
 

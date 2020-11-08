@@ -1,12 +1,13 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.region.controller;
 
-import me.hangyeol.eatgo.application.RegionService;
-import me.hangyeol.eatgo.domain.Region;
+import me.hangyeol.eatgo.region.service.RegionService;
+import me.hangyeol.eatgo.region.Region;
+import me.hangyeol.eatgo.region.controller.RegionController;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -29,10 +30,18 @@ class RegionControllerTests {
     @MockBean
     private RegionService regionService;
 
-    @Test
-    public void list() throws Exception {
+    private List<Region> initMockRegions() {
         List<Region> regions = new ArrayList<>();
-        regions.add(Region.builder().name("Seoul").build());
+        regions.add(Region.builder()
+                .name("Seoul")
+                .build());
+        return regions;
+    }
+
+    @Test
+    @DisplayName("/regions api 호출로 전체 지역 정보 가져오기")
+    public void list() throws Exception {
+        List<Region> regions = initMockRegions();
 
         given(regionService.getRegions()).willReturn(regions);
 

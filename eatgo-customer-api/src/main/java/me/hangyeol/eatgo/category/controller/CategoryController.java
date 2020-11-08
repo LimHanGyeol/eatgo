@@ -1,15 +1,10 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.category.controller;
 
-import me.hangyeol.eatgo.application.CategoryService;
-import me.hangyeol.eatgo.domain.Category;
-import org.springframework.http.ResponseEntity;
+import me.hangyeol.eatgo.category.service.CategoryService;
+import me.hangyeol.eatgo.category.Category;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -24,7 +19,9 @@ public class CategoryController {
     @GetMapping("/categories")
     public List<Category> list() {
         List<Category> categories = categoryService.getCategories();
-        categories.add(Category.builder().name("Korean Food").build());
+        categories.add(Category.builder()
+                .name("Korean Food")
+                .build());
         return categories;
     }
 }

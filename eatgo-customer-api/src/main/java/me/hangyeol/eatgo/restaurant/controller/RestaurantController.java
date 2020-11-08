@@ -1,13 +1,9 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.restaurant.controller;
 
-import me.hangyeol.eatgo.application.RestaurantService;
-import me.hangyeol.eatgo.domain.Restaurant;
-import org.springframework.http.ResponseEntity;
+import me.hangyeol.eatgo.restaurant.service.RestaurantService;
+import me.hangyeol.eatgo.restaurant.Restaurant;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin
@@ -20,16 +16,19 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
+    @GetMapping("/")
+    public String main() {
+        return "Restaurant, Service";
+    }
+
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
-        return restaurants;
+        return restaurantService.getRestaurants();
     }
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-        Restaurant restaurant = restaurantService.getRestaurant(id);
-        return restaurant;
+        return restaurantService.getRestaurant(id);
     }
 
 }

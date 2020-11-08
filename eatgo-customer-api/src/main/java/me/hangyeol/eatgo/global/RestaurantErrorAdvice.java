@@ -1,6 +1,6 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.global;
 
-import me.hangyeol.eatgo.domain.RestaurantNotFoundException;
+import me.hangyeol.eatgo.global.exception.RestaurantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

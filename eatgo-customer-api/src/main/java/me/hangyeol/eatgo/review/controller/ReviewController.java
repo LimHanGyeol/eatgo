@@ -1,7 +1,7 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.review.controller;
 
-import me.hangyeol.eatgo.application.ReviewService;
-import me.hangyeol.eatgo.domain.Review;
+import me.hangyeol.eatgo.review.service.ReviewService;
+import me.hangyeol.eatgo.review.Review;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,15 +22,12 @@ public class ReviewController {
     }
 
     @PostMapping("/restaurants/{restaurantId}/reviews")
-    public ResponseEntity<?> create(
-            @PathVariable("restaurantId") Long restaurantId,
-            @RequestBody @Valid Review resource)
-        throws URISyntaxException {
+    public ResponseEntity<?> create(@PathVariable("restaurantId") Long restaurantId,
+                                    @RequestBody @Valid Review resource) throws URISyntaxException {
 
         Review review = reviewService.addReview(restaurantId, resource);
         URI url = new URI("/restaurants/" + restaurantId + "/reviews/" + review.getId());
         return ResponseEntity.created(url)
                 .body("{}");
     }
-    // TODO : review Get, Update, Delete 미구현
 }

@@ -1,4 +1,4 @@
-package me.hangyeol.eatgo.application;
+package me.hangyeol.eatgo.category.service;
 
 import me.hangyeol.eatgo.category.Category;
 import me.hangyeol.eatgo.category.CategoryRepository;

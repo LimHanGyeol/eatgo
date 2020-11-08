@@ -1,8 +1,10 @@
-package me.hangyeol.eatgo.interfaces;
+package me.hangyeol.eatgo.review.controller;
 
-import me.hangyeol.eatgo.application.ReviewService;
-import me.hangyeol.eatgo.domain.Review;
-import me.hangyeol.eatgo.interfaces.ReviewController;
+import me.hangyeol.eatgo.review.service.ReviewService;
+import me.hangyeol.eatgo.review.Review;
+import me.hangyeol.eatgo.review.controller.ReviewController;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -23,18 +24,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ReviewController.class)
 class ReviewControllerTests {
 
+    private Review review;
+
     @Autowired
     MockMvc mvc;
 
     @MockBean
     private ReviewService reviewService;
 
+    @BeforeEach
+    void setUp() {
+        review = Review.builder()
+                .id(1004L)
+                .build();
+    }
+
     @Test
+    @DisplayName("/restaurants/{restaurantId}/reviews api 호출로 리뷰 작성")
     public void createWithValidAttributes() throws Exception {
-        given(reviewService.addReview(eq(1L), any())).willReturn(
-                Review.builder()
-                        .id(1004L)
-                        .build());
+        given(reviewService.addReview(eq(1L), any())).willReturn(review);
 
         mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -46,6 +54,7 @@ class ReviewControllerTests {
     }
 
     @Test
+    @DisplayName("/restaurants/{restaurantId}/reviews api 호출로 Empty input 이 들어오면 BadRequest 호출")
     public void createWithInValidAttributes() throws Exception {
         mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
