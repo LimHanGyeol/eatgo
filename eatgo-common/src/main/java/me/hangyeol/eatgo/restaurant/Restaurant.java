@@ -1,7 +1,9 @@
-package me.hangyeol.eatgo.domain;
+package me.hangyeol.eatgo.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import me.hangyeol.eatgo.menu.MenuItem;
+import me.hangyeol.eatgo.review.Review;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

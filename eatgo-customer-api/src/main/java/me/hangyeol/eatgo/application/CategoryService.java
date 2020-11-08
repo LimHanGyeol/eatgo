@@ -1,7 +1,7 @@
 package me.hangyeol.eatgo.application;
 
-import me.hangyeol.eatgo.domain.Category;
-import me.hangyeol.eatgo.domain.CategoryRepository;
+import me.hangyeol.eatgo.category.Category;
+import me.hangyeol.eatgo.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

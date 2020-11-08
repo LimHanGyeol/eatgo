@@ -1,4 +1,4 @@
-package me.hangyeol.eatgo.domain;
+package me.hangyeol.eatgo.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package me.hangyeol.eatgo.domain;
+package me.hangyeol.eatgo.restaurant;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

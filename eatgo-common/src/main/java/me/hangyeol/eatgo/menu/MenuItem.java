@@ -1,4 +1,4 @@
-package me.hangyeol.eatgo.domain;
+package me.hangyeol.eatgo.menu;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

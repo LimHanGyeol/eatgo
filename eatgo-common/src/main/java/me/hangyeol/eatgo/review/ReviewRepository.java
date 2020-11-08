@@ -1,4 +1,4 @@
-package me.hangyeol.eatgo.domain;
+package me.hangyeol.eatgo.review;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
